@@ -41,20 +41,31 @@ def StuUpdate (request, pk):
 
 @api_view(['POST'])
 def UpdateStudent(request):
+     print("ttttttttttttttttttttttttttttttttttttttttttttttttttttt")
      total_data = request.data
+     print("ttttttttttttttttttttttttttttttttttttttttttttttttttttt")
+     print(total_data)
      Stu_data = {
           'cllg_id': total_data['cllg_id'],
           'name': total_data['name'],
           'email': total_data['email'],
           'department': total_data['department'],
-          'cgpa': total_data['cgpa'],
-          'no_of_active_backlogs': total_data['no_of_active_backlogs'],
-          'crtchoice': total_data['crtchoice'],
+          'cgpa': float(total_data['cgpa']),
+          'no_of_active_backlogs': int(total_data['no_of_active_backlogs']),
+          'crtchoice': bool(total_data['crtchoice']),
           'linkdin': total_data['linkdin'],
           'github': total_data['github']
      }
+     print(Stu_data)
+     # print("ttttttttttttttttttttttttttttttttttttttttttttttttttttt")
      stu = serializers.StudentSerializer(data=Stu_data)
-     if stu.is_valid(raise_exception=True):
+     print(stu.is_valid())
+     print(stu.validated_data)
+     # print(stu.is_staff)
+     # print(stu.is_superuser)
+     print("ttttttttttttttttttttttttttttttttttttttttttttttttttttt")
+     print(type(stu.errors))
+     if stu.is_valid():
           stu.save()
           coding_data = {
                'cllg_id': total_data['cllg_id'],
